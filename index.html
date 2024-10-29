@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .button,
+        .song {
+            height: 250px;
+            width: 250px;
+            margin: 10px;
+        }
+
+        .button {
+            background-color: #005de2;
+        }
+
+        .song {
+            background-color: yellow;
+        }
+
+        .click {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-style: italic;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="button" id="click-button">
+        <p class="click">Clic</p>
+    </button>
+    <button class="song" id="horror-button">
+        <p class="click">Reproducir</p>
+    </button>
+    <audio id="click-sound" src="click-sound.mp3"></audio>
+    <audio id="horror-sound" src="cute-horror-song.mp3"></audio>
+    <div class="progress-container">
+        <progress id="progress-bar" value="0" max="100"></progress>
+    </div>
+
+    <script>
+        const botonClic = document.getElementById('click-button');
+        const botonHorror = document.getElementById('horror-button');
+        const sonidoClic = document.getElementById('click-sound');
+        const sonidoHorror = document.getElementById('horror-sound');
+        const barraProgreso = document.getElementById('progress-bar');
+
+        botonClic.addEventListener('click', () => {
+            sonidoClic.play();
+        });
+
+        botonClic.addEventListener('touchstart', () => {
+            sonidoClic.play();
+        });
+
+        botonHorror.addEventListener('click', () => {
+            if (sonidoHorror.paused) {
+                sonidoHorror.play();
+                botonHorror.querySelector('p').textContent = 'Pausa';
+            } else {
+                sonidoHorror.pause();
+                botonHorror.querySelector('p').textContent = 'Reproducir';
+            }
+        });
+
+        botonHorror.addEventListener('touchstart', () => {
+            if (sonidoHorror.paused) {
+                sonidoHorror.play();
+                botonHorror.querySelector('p').textContent = 'Pausa';
+            } else {
+                sonidoHorror.pause();
+                botonHorror.querySelector('p').textContent = 'Reproducir';
+            }
+        });
+
+        sonidoHorror.addEventListener('timeupdate', () => {
+            const progreso = (sonidoHorror.currentTime / sonidoHorror.duration) * 100;
+            barraProgreso.value = progreso;
+        });
+
+        sonidoHorror.addEventListener('ended', () => {
+            botonHorror.querySelector('p').textContent = 'Reproducir';
+            barraProgreso.value = 0;
+        });
+    </script>
+</body>
+
+</html>
+
+</html>
+
+</html>
